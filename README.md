@@ -1,50 +1,164 @@
-# Welcome to your Expo app 👋
+# Data Collector App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application built with Expo for collecting and managing personal information. This app provides a simple and intuitive interface for CRUD (Create, Read, Update, Delete) operations on people's data using SQLite for local storage.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **View All Datas**: Browse through a list of all stored datas
+- **Add New Datas**: Collect personal information with form validation
+- **Contact Details**: View detailed information for each contact
+- **Edit Information**: Update existing contact details with validation
+- **Delete Datas**: Remove datas with confirmation dialog
+- **Local Storage**: Data persists using SQLite database
+- **Form Validation**: Ensures data integrity for email, phone numbers, and dates
+- **Modern UI Design**: Clean and intuitive interface with responsive design
 
-   ```bash
-   npm install
-   ```
+## Screenshots
 
-2. Start the app
+### Home Screen
+- Displays list of all datas
+- Quick access to add new datas
+- Tap any contact to view details
 
-   ```bash
-    npx expo start
-   ```
+### Add/Edit Screen
+- Form validation for:
+  - Email format
+  - Phone numbers (digits only)
+  - Date format (YYYY-MM-DD)
+- Required field: Full name
+- Optional fields: Address, phone, email, city, date of birth, religion
 
-In the output, you'll find options to open the app in a
+### Detail Screen
+- View complete contact information
+- Edit and delete functionality
+- Confirmation dialog before deletion
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Framework**: React Native with Expo
+- **Navigation**: Expo Router (File-based routing)
+- **Database**: Expo SQLite
+- **State Management**: React Hooks
+- **UI Components**: Custom styled components
+- **Form Validation**: Custom validation functions
 
-## Get a fresh project
+## Prerequisites
 
-When you're ready, run:
+Before you begin, ensure you have installed:
+- Node.js (v14 or higher)
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- Expo Go app on your mobile device (for testing)
 
+## Installation
+
+1. Clone the repository:
 ```bash
-npm run reset-project
+git clone https://github.com/yourusername/data-collector-app.git
+cd data-collector-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-## Learn more
+3. Start the development server:
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Run the app:
+- Scan the QR code with Expo Go (Android)
+- Scan the QR code with Camera (iOS)
+- Press 'a' for Android emulator
+- Press 'i' for iOS simulator
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Project Structure
 
-## Join the community
+```
+data-collector-app/
+├── app/
+│   ├── _layout.js          # App layout and navigation setup
+│   ├── index.js            # Home screen with contact list
+│   ├── add.js              # Add new contact screen
+│   └── detail/
+│       └── [id].js         # Contact detail screen
+├── database/
+│   └── database.js         # SQLite database operations
+├── assets/                 # Images and static files
+├── app.json               # Expo configuration
+└── package.json           # Project dependencies
+```
 
-Join our community of developers creating universal apps.
+## Database Schema
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The app uses SQLite with the following schema:
+
+```sql
+CREATE TABLE people (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name TEXT NOT NULL,
+  address TEXT,
+  phone_number TEXT,
+  email TEXT,
+  city_of_origin TEXT,
+  date_of_birth TEXT,
+  religion TEXT
+);
+```
+
+## Key Components
+
+### Database Operations
+- `initDatabase()`: Initializes the SQLite database
+- `addPerson()`: Adds a new contact
+- `getAllPeople()`: Retrieves all datas
+- `getPersonById()`: Retrieves a specific contact
+- `updatePerson()`: Updates contact information
+- `deletePerson()`: Deletes a contact
+
+### Validation
+- Email validation using regex pattern
+- Phone number validation (digits only)
+- Date format validation (YYYY-MM-DD)
+- Required field validation for full name
+
+## Future Enhancements
+
+- [ ] Search functionality
+- [ ] Sort and filter options
+- [ ] Export/Import data feature
+- [ ] Profile picture support
+- [ ] Multiple phone numbers/emails per contact
+- [ ] Categories/tags for datas
+- [ ] Dark mode support
+- [ ] Data backup to cloud
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built with [Expo](https://expo.dev/)
+- UI inspired by modern contact management apps
+- Icons from [Expo Vector Icons](https://icons.expo.fyi/)
+
+## Authors
+
+- **Muhammad Faza** - *Initial work* - [YourGitHub](https://github.com/muhFaza)
+
+---
+
+Made with ❤️ using React Native and Expo
