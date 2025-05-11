@@ -1,6 +1,6 @@
-import { Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { initDatabase } from '../config/database';
+import { Stack } from "expo-router";
+import { useEffect } from "react";
+import { initDatabase } from "../config/database";
 
 export default function Layout() {
   useEffect(() => {
@@ -11,30 +11,33 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#2563EB',
+          backgroundColor: "#2563EB",
         },
-        headerTintColor: '#fff',
+        headerTintColor: "#fff",
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: "bold",
         },
       }}
+      initialRouteName="index"
     >
       <Stack.Screen
         name="index"
         options={{
-          title: 'Data Collector TK3',
+          title: "Data Collector TK4",
         }}
       />
+      <Stack.Screen name="home" options={{ headerShown: false }} />
+      <Stack.Screen name="list" />
       <Stack.Screen
         name="detail/[id]"
         options={{
-          title: 'Person Details',
+          title: "Person Details",
         }}
       />
       <Stack.Screen
         name="add"
         options={{
-          title: 'Add New Person',
+          title: "Add New Person",
         }}
       />
     </Stack>

@@ -2,6 +2,7 @@
   "expo": {
     "name": "data-collector-app",
     "slug": "data-collector-app",
+    "owner": "aldiwii",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,14 +10,24 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "217968589857-ppljhiidujm05in678soj1pdf3ugtfs3.apps.googleusercontent.com"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.muhfaza.datacollectorapp"
+      "package": "com.muhfaza.datacollectorapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBbLlEbqqnw9RRURT0CJSfsmGbbQ-iDjm0"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +44,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
@@ -43,7 +55,14 @@
         "origin": false
       },
       "eas": {
-        "projectId": "4f44cbe5-b89c-453c-84af-38ac70f1f552"
+        "projectId": "06d4b232-58de-4782-9f75-dc3fd328ee4d"
+      }
+    },
+    "build": {
+      "preview": {
+        "android": {
+          "buildType": "apk"
+        }
       }
     }
   }

@@ -1,108 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
-import { getAllPeople } from '../config/database';
+import React, { useEffect } from "react";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  isSuccessResponse,
+} from "@react-native-google-signin/google-signin";
 
-export default function HomePage() {
-  const [people, setPeople] = useState([]);
+export default function App() {
+  const [_, setUserInfo] = React.useState(null);
   const router = useRouter();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      loadPeople();
-    }, [])
-  );
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "217968589857-f3jfb226t2g93ne5vv1p0vembakuvpjh.apps.googleusercontent.com",
+    });
+  });
 
-  const loadPeople = async () => {
+  const handleGoogleSignIn = async () => {
     try {
-      const data = await getAllPeople();
-      setPeople(data);
-    } catch (error) {
-      console.error('Error loading people:', error);
+      const res = await GoogleSignin.signIn();
+
+      if (isSuccessResponse(res)) {
+        const { idToken, user } = res.data;
+
+        setUserInfo({
+          id: idToken,
+          ...user,
+        });
+
+        router.replace({
+          pathname: "/home",
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.itemContainer}
-      onPress={() => router.push(`/detail/${item.id}`)}
-    >
-      <Text style={styles.name}>{item.full_name}</Text>
-      {item.city_of_origin && (
-        <Text style={styles.city}>From: {item.city_of_origin}</Text>
-      )}
-    </TouchableOpacity>
-  );
-
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity 
-        style={styles.addButton}
-        onPress={() => router.push('/add')}
-      >
-        <Text style={styles.addButtonText}>Add New Person</Text>
-      </TouchableOpacity>
-
-      <FlatList
-        data={people}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        style={styles.list}
-        ListEmptyComponent={() => (
-          <Text style={styles.emptyText}>No data yet. Add some people!</Text>
-        )}
-      />
-    </SafeAreaView>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <GoogleSigninButton onPress={handleGoogleSignIn} />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  addButton: {
-    backgroundColor: '#2563EB',
-    padding: 15,
-    borderRadius: 10,
-    marginHorizontal: 20,
-    marginVertical: 20,
-  },
-  addButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  list: {
-    flex: 1,
-  },
-  itemContainer: {
-    backgroundColor: 'white',
-    padding: 15,
-    marginHorizontal: 20,
-    marginBottom: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  city: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 5,
-  },
-  emptyText: {
-    textAlign: 'center',
-    marginTop: 50,
-    fontSize: 16,
-    color: '#666',
-  },
-});
